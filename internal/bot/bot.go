@@ -89,14 +89,16 @@ func CreateResponse(msg Message, s string) string {
 }
 
 func Sanitize(msg Message) (string, error) {
+	var err error = nil
+	var message string = ""
 	switch msg.Chat.ChatType {
 	case Private:
 	case Group:
-		return msg.Text, nil
+		message = msg.Text
 	case Undefined:
-		return "", errors.New("can't determine chat type")
+		err = errors.New("can't determine chat type")
 	default:
-		return "", errors.New("bot can only be used in group or private chat")
+		err = errors.New("bot can only be used in group or private chat")
 	}
-	return "", errors.New("missing type")
+	return message, err
 }

@@ -41,3 +41,14 @@ func TestSanatize(t *testing.T) {
 		t.Errorf("sanatize error for %s should not succeed: %s", updateUndefined.Message.Chat.ChatType, succ)
 	}
 }
+
+func TestStrip(t *testing.T) {
+	succ, err := bot.Strip("@Test")
+	if err == nil {
+		t.Errorf("should raise error %s", succ)
+	}
+	_, err = bot.Strip("@Test Test")
+	if err != nil {
+		t.Error("should not raise error")
+	}
+}

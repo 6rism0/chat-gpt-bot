@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"regexp"
 	"strconv"
 
 	"github.com/6rism0/chat-gpt-bot/internal/util"
@@ -16,6 +17,8 @@ import (
 const telegramApiBaseUrl string = "https://api.telegram.org/bot"
 const telegramApiSendMessage string = "/sendMessage"
 const telegramTokenEnv string = "BOT_TOKEN"
+
+const cleanTextRegex = `(@\S+)`
 
 var telegramApi string = telegramApiBaseUrl + os.Getenv(telegramTokenEnv) + telegramApiSendMessage
 
@@ -74,31 +77,30 @@ func SendTextToTelegramChat(chatId int, text string) (string, error) {
 	return string(bodyBytes), nil
 }
 
-func CreateResponse(msg Message, s string) string {
-	var response string
-	switch msg.Chat.ChatType {
-	case Undefined:
-		response = "Error: can't determine chat type"
-	case Private:
-	case Group:
-		response = "TODO"
-	default:
-		response = "Bot can only be used in group or private chat"
-	}
-	return response
-}
-
 func Sanitize(msg Message) (string, error) {
 	var err error = nil
 	var message string = ""
 	switch msg.Chat.ChatType {
 	case Private:
 	case Group:
-		message = msg.Text
+		message, err = Strip(msg.Text)
 	case Undefined:
 		err = errors.New("can't determine chat type")
 	default:
 		err = errors.New("bot can only be used in group or private chat")
 	}
 	return message, err
+}
+
+func Strip(text string) (string, error) {
+	r, err := regexp.Compile(cleanTextRegex)
+	if err != nil {
+		return "", err
+	}
+	var strippedText = r.ReplaceAllString(text, "")
+	if strippedText != "" {
+		return strippedText, nil
+	} else {
+		return "", errors.New("empty message")
+	}
 }

@@ -21,6 +21,7 @@ type CompletionRequest struct {
 	Model     string `json:"model"`
 	Prompt    string `json:"prompt,omitempty"`
 	MaxTokens int    `json:"max_tokens,omitempty"`
+	Echo      bool   `json:"echo,omitempty"`
 }
 
 type CompletionResponse struct {
@@ -49,6 +50,7 @@ func DefaultCompletion() *CompletionRequest {
 		Model:     "text-davinci-003",
 		MaxTokens: 100,
 		Prompt:    "",
+		Echo:      true,
 	}
 }
 

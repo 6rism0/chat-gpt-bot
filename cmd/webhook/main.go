@@ -44,7 +44,7 @@ func CreateResponse(messsage bot.Message, text string) (string, error) {
 	request := completion.DefaultCompletion(text)
 	util.LogDebug(fmt.Sprintf("start request for %+v", request))
 	client := ai.OpenAIClient(os.Getenv(tokenENV))
-	res, err := completion.RequestCompletion(client, *request)
+	res, err := completion.RequestCompletion(client, request)
 	if err != nil {
 		util.LogError(fmt.Sprintf("Could not complete request - %s", err.Error()))
 		return "", err

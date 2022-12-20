@@ -83,6 +83,6 @@ func send(response bot.Response) {
 	if errTelegram != nil {
 		util.LogError(fmt.Sprintf("got error %s from telegram, response body is %s", errTelegram.Error(), responseTelegram))
 	} else {
-		util.LogDebug(fmt.Sprintf("successful send to id %d", response.Id()))
+		util.LogDebug(fmt.Sprintf("successful send to id %+v", responseTelegram))
 	}
 }

@@ -78,17 +78,21 @@ func SendTextToTelegramChat(chatId int, text string) (string, error) {
 }
 
 func Sanitize(msg Message) (string, error) {
-	var err error = nil
-	var message string = ""
+	var err error
+	var message string
 	switch msg.Chat.ChatType {
 	case Private:
+		message, err = Strip(msg.Text)
 	case Group:
 		message, err = Strip(msg.Text)
 	case Undefined:
+		message = ""
 		err = errors.New("can't determine chat type")
 	default:
+		message = ""
 		err = errors.New("bot can only be used in group or private chat")
 	}
+	//util.LogDebug(fmt.Sprintf("Sanitize message: %s -> msg %s, err %s", msg.Text, message, err.Error()))
 	return message, err
 }
 

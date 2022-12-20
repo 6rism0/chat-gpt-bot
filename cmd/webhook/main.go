@@ -1,4 +1,4 @@
-package bot
+package webhook
 
 import (
 	"errors"
@@ -30,7 +30,7 @@ func HandleTelegramWebHook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, err := createResponse(update.Message, sanitizedSeed)
+	response, err := CreateResponse(update.Message, sanitizedSeed)
 	if err != nil {
 		send(update.Message.Chat.Id, err.Error())
 		return
@@ -39,11 +39,12 @@ func HandleTelegramWebHook(w http.ResponseWriter, r *http.Request) {
 	send(update.Message.Chat.Id, response)
 }
 
-func createResponse(messsage bot.Message, text string) (string, error) {
-	request := completion.DefaultCompletion()
-	request.Prompt = text
+func CreateResponse(messsage bot.Message, text string) (string, error) {
+	util.LogDebug(fmt.Sprintf("CreateResponse %+v, text: %+v", messsage, text))
+	request := completion.DefaultCompletion(text)
+	util.LogDebug(fmt.Sprintf("start request for %+v", request))
 	client := ai.OpenAIClient(os.Getenv(tokenENV))
-	res, err := completion.RequestCompletion(client, *request)
+	res, err := completion.RequestCompletion(client, request)
 	if err != nil {
 		util.LogError(fmt.Sprintf("Could not complete request - %s", err.Error()))
 		return "", err

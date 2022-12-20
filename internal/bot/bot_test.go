@@ -9,7 +9,7 @@ import (
 var updatePrivate = bot.Update{
 	Id: 1,
 	Message: bot.Message{
-		Text: "Test",
+		Text: "@ChatGPTBot What is the capital of Germany?",
 		Chat: bot.Chat{
 			Id:       2,
 			ChatType: bot.Private,
@@ -18,9 +18,12 @@ var updatePrivate = bot.Update{
 }
 
 func TestSanatize(t *testing.T) {
-	_, err := bot.Sanitize(updatePrivate.Message)
+	succ, err := bot.Sanitize(updatePrivate.Message)
 	if err != nil {
 		t.Errorf("sanatize error for %s: %s", updatePrivate.Message.Chat.ChatType, err.Error())
+	}
+	if succ == "" {
+		t.Errorf("final string should not be empty")
 	}
 	updateGroup := updatePrivate
 	updateGroup.Message.Chat.ChatType = bot.Group
@@ -28,9 +31,12 @@ func TestSanatize(t *testing.T) {
 	if err != nil {
 		t.Errorf("sanatize error for %s: %s", updateGroup.Message.Chat.ChatType, err.Error())
 	}
+	if succ == "" {
+		t.Errorf("final string should not be empty")
+	}
 	updateSupergroup := updateGroup
 	updateSupergroup.Message.Chat.ChatType = bot.Supergroup
-	succ, err := bot.Sanitize(updateSupergroup.Message)
+	succ, err = bot.Sanitize(updateSupergroup.Message)
 	if err == nil {
 		t.Errorf("sanatize error for %s should not succeed: %s", updateSupergroup.Message.Chat.ChatType, succ)
 	}
@@ -47,8 +53,12 @@ func TestStrip(t *testing.T) {
 	if err == nil {
 		t.Errorf("should raise error %s", succ)
 	}
-	_, err = bot.Strip("@Test Test")
+	succ, err = bot.Strip("@ChatGPTBot What is the capital of Germany?")
 	if err != nil {
 		t.Error("should not raise error")
 	}
+	if succ == "" {
+		t.Error("should not be empty")
+	}
+	t.Log(succ)
 }

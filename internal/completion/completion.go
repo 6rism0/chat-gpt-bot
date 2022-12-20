@@ -45,11 +45,11 @@ type CompletionChoice struct {
 	FinishReason string `json:"finish_reason"`
 }
 
-func DefaultCompletion() *CompletionRequest {
-	return &CompletionRequest{
+func DefaultCompletion(prompt string) CompletionRequest {
+	return CompletionRequest{
 		Model:     "text-davinci-003",
 		MaxTokens: 100,
-		Prompt:    "",
+		Prompt:    prompt,
 		Echo:      true,
 	}
 }

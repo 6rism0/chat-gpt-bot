@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	e "github.com/6rism0/chat-gpt-bot/internal/error"
+	"github.com/6rism0/chat-gpt-bot/internal/util"
 )
 
 type Client struct {
@@ -22,6 +23,7 @@ func (client *Client) SendRequest(req *http.Request, v interface{}) error {
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", client.Token))
 	req.Header.Set("Content-Type", jsonType)
 
+	util.LogDebug(fmt.Sprintf("SendRequest - %+v", req))
 	res, err := client.HttpClient.Do(req)
 	if err != nil {
 		fmt.Printf("res error %s", err)

@@ -156,7 +156,7 @@ func SendResponseToTelegramChat(r Response) (string, error) {
 			"photo":   {r.Data()},
 		}
 	case TextResponse:
-		sendUrl = telegramApi + os.Getenv(telegramTokenEnv) + telegramApiSendMessage
+		sendUrl = telegramApiBaseUrl + os.Getenv(telegramTokenEnv) + telegramApiSendMessage
 		values = url.Values{
 			"chat_id": {strconv.Itoa(r.Id())},
 			"text":    {r.Data()},

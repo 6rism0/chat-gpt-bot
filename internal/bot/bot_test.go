@@ -47,8 +47,12 @@ func TestStrip(t *testing.T) {
 	if err == nil {
 		t.Errorf("should raise error %s", succ)
 	}
-	_, err = bot.Strip("@Test Test")
+	succ, err = bot.Strip("@ChatGPTBot What is the capital of Germany?")
 	if err != nil {
 		t.Error("should not raise error")
 	}
+	if succ == "" {
+		t.Error("should not be empty")
+	}
+	t.Log(succ)
 }

@@ -38,8 +38,7 @@ func HandleTelegramWebHook(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateResponse(messsage bot.Message, text string) (string, error) {
-	request := completion.DefaultCompletion()
-	request.Prompt = text
+	request := completion.DefaultCompletion(text)
 	util.LogDebug(fmt.Sprintf("start request for %+v", request))
 	// client := ai.OpenAIClient(os.Getenv(tokenENV))
 	// res, err := completion.RequestCompletion(client, *request)

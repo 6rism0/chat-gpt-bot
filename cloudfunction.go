@@ -3,9 +3,9 @@ package chatgptbot
 import (
 	"net/http"
 
-	"github.com/6rism0/chat-gpt-bot/cmd/bot"
+	"github.com/6rism0/chat-gpt-bot/cmd/webhook"
 )
 
 func Run(w http.ResponseWriter, r *http.Request) {
-	bot.HandleTelegramWebHook(w, r)
+	webhook.HandleTelegramWebHook(w, r)
 }

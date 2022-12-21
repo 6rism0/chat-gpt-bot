@@ -18,10 +18,10 @@ const (
 )
 
 type CompletionRequest struct {
-	Model     string `json:"model"`
-	Prompt    string `json:"prompt,omitempty"`
-	MaxTokens int    `json:"max_tokens,omitempty"`
-	Echo      bool   `json:"echo,omitempty"`
+	Model     ModelType `json:"model"`
+	Prompt    string    `json:"prompt,omitempty"`
+	MaxTokens int       `json:"max_tokens,omitempty"`
+	Echo      bool      `json:"echo,omitempty"`
 }
 
 type CompletionResponse struct {
@@ -47,7 +47,7 @@ type CompletionChoice struct {
 
 func DefaultCompletion(prompt string) CompletionRequest {
 	return CompletionRequest{
-		Model:     "text-davinci-003",
+		Model:     DavinciText,
 		MaxTokens: 100,
 		Prompt:    prompt,
 		Echo:      true,

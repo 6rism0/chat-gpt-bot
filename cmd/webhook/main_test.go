@@ -14,6 +14,10 @@ import (
 
 func TestResponse(t *testing.T) {
 	// t.Setenv("OPENAI_API_KEY", "")
+	apiToken := os.Getenv("OPENAI_API_KEY")
+	if apiToken == "" {
+		t.Skip("Skipping testing against production set OPENAI_API_KEY to run test")
+	}
 	message := bot.Message{
 		Text: "What is the capital of Germany?",
 		Chat: bot.Chat{
@@ -52,6 +56,10 @@ func TestResponse(t *testing.T) {
 
 func TestImage(t *testing.T) {
 	// t.Setenv("OPENAI_API_KEY", "")
+	apiToken := os.Getenv("OPENAI_API_KEY")
+	if apiToken == "" {
+		t.Skip("Skipping testing against production set OPENAI_API_KEY to run test")
+	}
 	request := image.DefaultRequest("fire spitting wiener dog")
 	util.LogDebug(fmt.Sprintf("start request for %+v", request))
 	client := ai.OpenAIClient(os.Getenv("OPENAI_API_KEY"))

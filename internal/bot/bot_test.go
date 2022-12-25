@@ -18,37 +18,6 @@ var updatePrivate = bot.Update{
 	},
 }
 
-// func TestSanatize(t *testing.T) {
-// 	succ, err := bot.Sanitize(updatePrivate.Message)
-// 	if err != nil {
-// 		t.Errorf("sanatize error for %s: %s", updatePrivate.Message.Chat.ChatType, err.Error())
-// 	}
-// 	if succ == "" {
-// 		t.Errorf("final string should not be empty")
-// 	}
-// 	updateGroup := updatePrivate
-// 	updateGroup.Message.Chat.ChatType = bot.Group
-// 	_, err = bot.Sanitize(updateGroup.Message)
-// 	if err != nil {
-// 		t.Errorf("sanatize error for %s: %s", updateGroup.Message.Chat.ChatType, err.Error())
-// 	}
-// 	if succ == "" {
-// 		t.Errorf("final string should not be empty")
-// 	}
-// 	updateSupergroup := updateGroup
-// 	updateSupergroup.Message.Chat.ChatType = bot.Supergroup
-// 	succ, err = bot.Sanitize(updateSupergroup.Message)
-// 	if err == nil {
-// 		t.Errorf("sanatize error for %s should not succeed: %s", updateSupergroup.Message.Chat.ChatType, succ)
-// 	}
-// 	updateUndefined := updateSupergroup
-// 	updateUndefined.Message.Chat.ChatType = bot.Undefined
-// 	succ, err = bot.Sanitize(updateUndefined.Message)
-// 	if err == nil {
-// 		t.Errorf("sanatize error for %s should not succeed: %s", updateUndefined.Message.Chat.ChatType, succ)
-// 	}
-// }
-
 func TestGroup(t *testing.T) {
 	updateSupergroup := updatePrivate
 	updateSupergroup.Message.Chat.ChatType = bot.Supergroup
@@ -100,21 +69,6 @@ func TestEmpty(t *testing.T) {
 		t.Errorf("sanatize error nil should not succeed - %+v", succ)
 	}
 }
-
-// func TestStrip(t *testing.T) {
-// 	succ, err := bot.Strip("@Test")
-// 	if err == nil {
-// 		t.Errorf("should raise error %s", succ)
-// 	}
-// 	succ, err = bot.Strip("@ChatGPTBot What is the capital of Germany?")
-// 	if err != nil {
-// 		t.Error("should not raise error")
-// 	}
-// 	if succ == "" {
-// 		t.Error("should not be empty")
-// 	}
-// 	t.Log(succ)
-// }
 
 func TestSendResponse(t *testing.T) {
 	apiToken := os.Getenv("BOT_TOKEN")

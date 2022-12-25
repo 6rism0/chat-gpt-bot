@@ -23,6 +23,9 @@ const telegramTokenEnv string = "BOT_TOKEN"
 
 const cleanTextRegex = `(@\S+)`
 
+const startText = `Open AI Bot. Use /image to create an image with DALL•E`
+const helpText = `Write anything and the chatbot answers, or use the /image command to create an new image.`
+
 var telegramApi string = telegramApiBaseUrl + os.Getenv(telegramTokenEnv)
 
 type Update struct {
@@ -217,12 +220,12 @@ func StripBotName(text string) string {
 func InputToResponse(inputText string) (Input, error) {
 	var input Input
 	if strings.Contains(inputText, Start) {
-		inputText = "This is a Start Command"
+		inputText = startText
 		input = CommandInput{
 			Input: inputText,
 		}
 	} else if strings.Contains(inputText, Help) {
-		inputText = "This is a Help Command"
+		inputText = helpText
 		input = CommandInput{
 			Input: inputText,
 		}

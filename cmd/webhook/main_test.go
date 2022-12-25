@@ -13,7 +13,6 @@ import (
 )
 
 func TestResponse(t *testing.T) {
-	// t.Setenv("OPENAI_API_KEY", "")
 	apiToken := os.Getenv("OPENAI_API_KEY")
 	if apiToken == "" {
 		t.Skip("Skipping testing against production set OPENAI_API_KEY to run test")
@@ -55,7 +54,6 @@ func TestResponse(t *testing.T) {
 }
 
 func TestImage(t *testing.T) {
-	// t.Setenv("OPENAI_API_KEY", "")
 	apiToken := os.Getenv("OPENAI_API_KEY")
 	if apiToken == "" {
 		t.Skip("Skipping testing against production set OPENAI_API_KEY to run test")
